@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'graphene_django',
     'taxi_app',
     'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
+    'graphql_auth',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -53,7 +55,7 @@ MIDDLEWARE = [
 ]
 
 GRAPHENE = {
-    'SCHEMA': 'quickstart.schema.schema',  # this file doesn't exist yet
+    'SCHEMA': 'taxi_app_backend.schema.schema',  # this file doesn't exist yet
     'MIDDLEWARE': [
         'graphql_jwt.middleware.JSONWebTokenMiddleware',
     ],
@@ -64,11 +66,23 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+GRAPHQL_AUTH = {
+    'REGISTER_MUTATION_FIELDS': ['email', 'username', 'first_name', 'last_name', 'birth_date', 'phone_number'],
+    # ...
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 GRAPHQL_JWT = {
     "JWT_VERIFY_EXPIRATION": True,
 
     # optional
     "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
+
+    "JWT_ALLOW_ANY_CLASSES": [
+        "graphql_auth.mutations.Register",
+        "graphql_auth.mutations.VerifyAccount",
+    ],
 }
 
 ROOT_URLCONF = 'taxi_app_backend.urls'
