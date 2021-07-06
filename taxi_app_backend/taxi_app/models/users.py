@@ -4,6 +4,13 @@ from django.core.validators import RegexValidator
 
 
 class BaseUser(AbstractUser):
+
+    ROLE_CHOICES = (
+        (1, "client"),
+        (2, "driver"),
+        (3, "admin"),
+    )
+
     email = models.EmailField(
         blank=False, max_length=254, verbose_name="email address")
     phone_regex = RegexValidator(
@@ -12,17 +19,12 @@ class BaseUser(AbstractUser):
         validators=[phone_regex], max_length=17, blank=True, unique=True, default="")
     birth_date = models.DateField()
     picture = models.ImageField(upload_to='uploads/% Y/% m/% d/')
+    credit = models.FloatField(default=0.00)
+    user_type = models.IntegerField(
+        choices=ROLE_CHOICES, default=1)
 
     USERNAME_FIELD = "username"
     EMAIL_FIELD = "email"
 
     def __str__(self):
         return self.email
-
-
-'''
-class Client(AbstractUser):
-    user = models.OneToOneField(
-        BaseUser, on_delete=models.CASCADE, primary_key=True)
-    credit = models.FloatField()
-'''
