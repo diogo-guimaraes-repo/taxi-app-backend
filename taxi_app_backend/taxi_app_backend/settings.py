@@ -42,9 +42,12 @@ INSTALLED_APPS = [
     'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
     'graphql_auth',
     'django_filters',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 GRAPHENE = {
@@ -67,7 +72,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 GRAPHQL_AUTH = {
-    'REGISTER_MUTATION_FIELDS': ['email', 'username', 'first_name', 'last_name', 'birth_date', 'phone_number'],
+    'REGISTER_MUTATION_FIELDS': ['email', 'username', 'first_name', 'last_name', 'phone_number'],
     # ...
 }
 
@@ -85,6 +90,10 @@ GRAPHQL_JWT = {
         "graphql_auth.mutations.ObtainJSONWebToken",
     ],
 }
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
 
 ROOT_URLCONF = 'taxi_app_backend.urls'
 
