@@ -73,6 +73,7 @@ AUTHENTICATION_BACKENDS = [
 
 GRAPHQL_AUTH = {
     'REGISTER_MUTATION_FIELDS': ['email', 'username', 'first_name', 'last_name', 'phone_number'],
+    'ALLOW_LOGIN_NOT_VERIFIED': False,
     # ...
 }
 
@@ -88,6 +89,8 @@ GRAPHQL_JWT = {
         "graphql_auth.mutations.Register",
         "graphql_auth.mutations.VerifyAccount",
         "graphql_auth.mutations.ObtainJSONWebToken",
+        "graphql_auth.mutations.SendPasswordResetEmail",
+        "graphql_auth.mutations.PasswordReset",
     ],
 }
 
