@@ -1,3 +1,4 @@
-from .users import BaseUser
+from .users import BaseUser, Client, Driver, Admin
+from .trips import Payment, Trip
 
-__all__ = ['BaseUser']
+__all__ = ['BaseUser', 'Client', 'Driver', 'Admin', 'Payment', 'Trip']
